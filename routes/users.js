@@ -19,7 +19,8 @@ router.get("/all", async function (req, res) {
         } else {
           //xử lý chức năng tương ứng với API
           var list = await product.find().populate('category');
-          res.json(list);
+          res.status(200).json({ status: true, message: "thành công", product: list });
+
         }
       });
     } else {
@@ -32,21 +33,47 @@ router.get("/all", async function (req, res) {
 });
 
 
-router.get("/soluong", async function (req, res) {
-  const token = req.header("Authorization").split(' ')[1];
-  if (token) {
-    JWT.verify(token, config.SECRETKEY, async function (err, id) {
-      if (err) {
-        res.status(401).json({ status: false, message: "có lỗi" + err });
-      } else {
-        var list = await product.find({ soluong: { $gt: 9 } });
-        res.json(list);
-      }
-    });
-  } else {
-    res.status(401).json({ status: false, message: "kh xác thực" + err });
+router.get("/all", async function (req, res) {
+  try {
+    const token = req.header("Authorization").split(' ')[1];
+    if (token) {
+      JWT.verify(token, config.SECRETKEY, async function (err, id) {
+        if (err) {
+          res.status(401).json({ status: false, message: "có lỗi" + err });
+        } else {
+          // Lấy danh sách sản phẩm và populate category
+          var list = await product.find().populate('category');
+          
+          // Kiểm tra nếu có dữ liệu và trả về với trường 'product'
+          res.status(200).json({ 
+            status: true, 
+            message: "thành công", 
+            product: list  // Trả về danh sách sản phẩm trong trường 'product'
+          });
+        }
+      });
+    } else {
+      res.status(401).json({ status: false, message: "kh xác thực" });
+    }
+  } catch (error) {
+    res.status(400).json({ status: false, message: "có lỗi" });
   }
 });
+
+router.get("/all1", async function (req, res) {
+ 
+          // Lấy danh sách sản phẩm và populate category
+          var list = await product.find().populate('category');
+          
+          // Kiểm tra nếu có dữ liệu và trả về với trường 'product'
+          res.status(200).json({ 
+            status: true, 
+            message: "thành công", 
+            product: list  // Trả về danh sách sản phẩm trong trường 'product'
+          });
+     
+});
+
 
 
 router.get("/gia", async function (req, res) {
