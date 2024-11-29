@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 var sanpham = require("../model/sanpham");
+
+//1.Lấy tất cả sp
 router.get("/all", async function (req, res) {
     try {
         var list = await sanpham.find().populate('size');
@@ -11,6 +13,8 @@ router.get("/all", async function (req, res) {
     }
 });
 
+
+//2.Thêm sản phẩm
 router.post("/add",async function(req,res) {
     try {
       const {tensp,gia,size}=req.body;
@@ -21,6 +25,18 @@ router.post("/add",async function(req,res) {
       res.status(400).json({status:false,message:"có lỗi xảy ra"});
     }
     
+});
+
+//3.Xóa sản phẩm
+router.delete("/delete/:id",async function(req,res)
+{
+    try {
+        const{id}=req.params;
+        await sanpham.findByIdAndDelete(id);
+        res.status(200).json({status:true,message:"thành công"});
+    } catch (e) {
+        res.status(400).json({status:false,message:"kh thành công"});
+    }
 });
 
 module.exports = router;
