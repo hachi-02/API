@@ -78,7 +78,7 @@ router.get("/giagiam", async function (req, res) {
     }
   });
 
-  router.put("/edit",async function(req,res) {
+  router.put("/edit/:id",async function(req,res) {
     try {
       const {id,tensp,gia,size}=req.body;
       //tìm sp chỉnh sửa
