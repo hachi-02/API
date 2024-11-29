@@ -102,5 +102,13 @@ router.get("/giagiam", async function (req, res) {
      
   });
 
+  //tìm kiếm thoong tin theo mssv
+router.get("/thongtin/:id",async function(req,res)
+{
+  var list= await sanpham.findById(req.params.id);
+  res.json(list);
+});
+
+
 
 module.exports = router;
