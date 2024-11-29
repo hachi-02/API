@@ -78,5 +78,30 @@ router.get("/giagiam", async function (req, res) {
     }
   });
 
+  router.put("/edit",async function(req,res) {
+    try {
+      const {id,tensp,gia,size}=req.body;
+      //tìm sp chỉnh sửa
+      const findSP=await sanpham.findById(id);
+      if(findSP)
+      {
+        findSP.tensp=tensp?tensp:findSP.tensp;
+        findSP.gia=gia?gia:findSP.gia;
+        if (size) {
+            findSP.size = size;
+          }
+        await findSP.save();
+        res.status(200).json({status:true,message:"sửa thành công"});
+      }
+      else
+      {
+        res.status(400).json({status:false,message:"chưa tìm thấy sp"});
+      }
+    } catch (error) {
+      res.status(400).json({status:false,message:"có lỗi xảy ra"});
+    }
+     
+  });
+
 
 module.exports = router;
