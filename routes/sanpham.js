@@ -105,8 +105,14 @@ router.get("/giagiam", async function (req, res) {
   //tìm kiếm thoong tin theo mssv
 router.get("/thongtin/:id",async function(req,res)
 {
-  var list= await sanpham.findById(req.params.id);
-  res.json(list);
+    try {
+        var list= await sanpham.findById(req.params.id);
+        res.json(list);
+    } catch (error) {
+        res.status(400).json({status:false,message:"null"});
+    }
+ 
+ 
 });
 
 
