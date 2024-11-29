@@ -11,4 +11,16 @@ router.get("/all", async function (req, res) {
     }
 });
 
+router.post("/add",async function(req,res) {
+    try {
+      const {tensp,gia,size}=req.body;
+      const newItem={tensp,gia,size};
+      await sanpham.create(newItem);
+      res.status(200).json({status:true,message:"thêm thành công"});
+    } catch (error) {
+      res.status(400).json({status:false,message:"có lỗi xảy ra"});
+    }
+    
+});
+
 module.exports = router;
