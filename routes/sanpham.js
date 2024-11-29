@@ -47,7 +47,7 @@ router.get("/thongtin/tensp",async function(req,res)
     const { tensp } = req.query;
     const thongTinSP = await sanpham.findOne({ tensp: tensp });
     if (!thongTinSP) {
-        return res.status(404).json({ status: false, message: "Sản phẩm không tìm thấy" });
+        return res.status(404).json({ status: false, message: "Sản phẩm không tìm thấy" }).populate('size');
     }
   res.json({sanpham:thongTinSP});
 });
