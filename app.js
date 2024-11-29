@@ -7,6 +7,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var sinhvienRouter = require('./routes/sinhvien');
+var sanphamRouter = require('./routes/sanpham');
 
 const mongoose=require('mongoose');
 require('./model/usermodel');
@@ -14,6 +15,8 @@ require('./model/category');
 require('./model/product');
 require('./model/trash');
 require('./model/sinhvien');
+require('./model/sanpham');
+require('./model/size');
 
 var app = express();
 
@@ -34,7 +37,7 @@ mongoose.connect('mongodb+srv://dungntps40706:AUY973pvpPTrZ6p@cluster0.obopa.mon
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/sinhvien',sinhvienRouter);
-
+app.use('/sanpham',sanphamRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
