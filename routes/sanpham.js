@@ -78,42 +78,29 @@ router.get("/giagiam", async function (req, res) {
     }
   });
 
-  const mongoose = require('mongoose'); // Thêm import mongoose nếu chưa có
-
-router.put("/edit", async function(req, res) {
+  router.put("/edit",async function(req,res) {
     try {
-        const { id, tensp, gia, size } = req.body;
+      const {id,tensp,gia,size}=req.body;
+      //tìm sp chỉnh sửa
+      const findSP=await sanpham.findById(id);
 
-        // Kiểm tra xem ID có hợp lệ không
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).json({ status: false, message: "ID không hợp lệ" });
-        }
-
-        // Tìm sản phẩm theo ID
-        const findSP = await sanpham.findById(id);
-
-        if (findSP) {
-            // Cập nhật thông tin sản phẩm nếu có
-            findSP.tensp = tensp ? tensp : findSP.tensp;
-            findSP.gia = gia ? gia : findSP.gia;
-            
-            // Chỉ cập nhật size nếu có giá trị mới
-            if (size) {
-                findSP.size = mongoose.Types.ObjectId(size); // Đảm bảo size là ObjectId hợp lệ
-            }
-
-            // Lưu lại sản phẩm đã được cập nhật
-            await findSP.save();
-
-            res.status(200).json({ status: true, message: "Sửa thành công", sanpham: findSP });
-        } else {
-            res.status(404).json({ status: false, message: "Sản phẩm không tìm thấy" });
-        }
+      if(findSP)
+      {
+        findSP.tensp=tensp?tensp:findSP.tensp;
+        findSP.gia=gia?gia:findSP.gia;
+        findSP.size=size?size:findSP.size;
+        await findSP.save();
+        res.status(200).json({status:true,message:"sửa thành công"});
+      }
+      else
+      {
+        res.status(400).json({status:false,message:"chưa tìm thấy sp"});
+      }
     } catch (error) {
-        console.log(error); // In lỗi chi tiết ra console nếu có
-        res.status(400).json({ status: false, message: "Có lỗi xảy ra" });
+      res.status(400).json({status:false,message:"có lỗi xảy ra"});
     }
-});
+     
+  });
 
 
 module.exports = router;
