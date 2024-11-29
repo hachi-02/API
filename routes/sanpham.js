@@ -40,7 +40,7 @@ router.delete("/delete/:id",async function(req,res)
     }
 });
 
-//
+//4.Tìm kiếm sản phẩm
 router.get("/thongtin/tensp",async function(req,res)
 {
     try {
@@ -57,5 +57,26 @@ router.get("/thongtin/tensp",async function(req,res)
     
     
 });
+
+//5.Giá tăng dần
+router.get("/giatang", async function (req, res) {
+    try {
+      const list = await sanpham.find().sort({ gia: 1 });
+      res.json(list);
+    } catch (error) {
+      res.status(500).json({ status: false, message: "Lỗi server" });
+    }
+  });
+
+//6.Giá giảm dần
+router.get("/giagiam", async function (req, res) {
+    try {
+      const list = await sanpham.find().sort({ gia: -1 });
+      res.json(list);
+    } catch (error) {
+      res.status(500).json({ status: false, message: "Lỗi server" });
+    }
+  });
+
 
 module.exports = router;
