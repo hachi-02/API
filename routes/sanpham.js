@@ -45,11 +45,11 @@ router.get("/thongtin/tensp",async function(req,res)
 {
     //lấy tên sp từ query
     const { tensp } = req.query;
-    const sanpham = await sanpham.findOne({ tensp: tensp });
+    const thongTinSP = await sanpham.findOne({ tensp: tensp });
     if (!sanpham) {
         return res.status(404).json({ status: false, message: "Sản phẩm không tìm thấy" });
     }
-  res.json(sanpham);
+  res.json({sanpham:thongTinSP});
 });
 
 module.exports = router;
