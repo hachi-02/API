@@ -41,15 +41,19 @@ router.delete("/delete/:id",async function(req,res)
 });
 
 //
-router.get("/thongtin/tensp",async function(req,res)
-{
-    //lấy tên sp từ query
-    const { tensp } = req.query;
-    const thongTinSP = await sanpham.findOne({ tensp: tensp }).populate('size');
-    if (!thongTinSP) {
-        return res.status(404).json({ status: false, message: "Sản phẩm không tìm thấy" });
+router.get("/thongtin/tensp", async function(req, res) {
+    try {
+        const { tensp } = req.query;
+        const thongTinSP = await sanpham.findOne({ tensp: tensp }).populate('size');
+        if (!thongTinSP) {
+            return res.status(404).json({ status: false, message: "Sản phẩm không tìm thấy" });
+        }
+        res.json({ sanpham: thongTinSP });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ status: false, message: "Có lỗi" });
     }
-  res.json({sanpham:thongTinSP});
 });
+
 
 module.exports = router;
