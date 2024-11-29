@@ -88,7 +88,7 @@ router.get("/giagiam", async function (req, res) {
         findSP.tensp=tensp?tensp:findSP.tensp;
         findSP.gia=gia?gia:findSP.gia;
         if (size) {
-            findSP.size = size;
+            findSP.size = mongoose.Types.ObjectId(size);
           }
         await findSP.save();
         res.status(200).json({status:true,message:"sửa thành công"});
