@@ -38,6 +38,7 @@ router.post("/add", async function (req, res) {
           res.status(401).json({ status: false, message: "có lỗi" + err });
         } else {
           const { tensp, gia, size } = req.body;
+          const sizeObj = await Size.findOne({ size: size });
           const newItem = { tensp, gia, size };
           const saveSP = await sanpham.create(newItem);
           const finalSP = await sanpham.findById(saveSP.id).populate('size');
