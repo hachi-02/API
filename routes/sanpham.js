@@ -22,7 +22,7 @@ router.get("/all", async function (req, res) {
       res.status(401).json({ status: false, message: "kh xác thực" + err });
     }
   } catch (error) {
-    res.status(400).json({ status: false, message: "Có lỗi" });
+    res.status(400).json({ status: false, message: "Có lỗi", error: error.message  });
   }
 });
 
