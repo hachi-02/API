@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 var sanpham = require("../model/sanpham");
-
+const JWT = require('jsonwebtoken');
+const config = require("../ultil/tokenConfig");
 
 
 //1.Lấy tất cả sp
