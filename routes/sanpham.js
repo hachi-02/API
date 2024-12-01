@@ -40,25 +40,25 @@ router.post("/add", async function (req, res) {
         } else {
           const { tensp, gia, size } = req.body;
           const sizeObj = await Size.findOne({ size: size });
+
           if (!sizeObj) {
-            console.log("Không tìm thấy size");
-        } else {
-            console.log("sizeObj._id: ", sizeObj._id);
-        }
-          const newItem = { tensp, gia, size: sizeObj._id  };
+            return res.status(404).json({ status: false, message: "Kích thước không tìm thấy" }); // Trả về lỗi 404
+          }
+
+          const newItem = { tensp, gia, size: sizeObj._id };
           const saveSP = await sanpham.create(newItem);
-          const finalSP = await sanpham.findById(saveSP._id).populate('size');
-          console.log('size:', sizeObj);
-          res.status(200).json({ status: true, message: "thêm thành công", sanpham: saveSP });
+          const finalSP = await sanpham.findById(saveSP._id).populate('size'); // Sử dụng finalSP
+          console.log('finalSP:', finalSP); // kiểm tra finalSP
+          res.status(200).json({ status: true, message: "thêm thành công", sanpham: finalSP }); // Trả về finalSP
         }
       });
     } else {
-      res.status(401).json({ status: false, message: "kh xác thực" + err });
+      res.status(401).json({ status: false, message: "không xác thực" });
     }
   } catch (error) {
-    res.status(400).json({ status: false, message: "có lỗi xảy ra" });
+    console.error("Error:", error); // Log lỗi chi tiết
+    res.status(500).json({ status: false, message: "Có lỗi xảy ra", error: error.message }); // Trả về lỗi 500 nếu có lỗi server
   }
-
 });
 
 //3.Xóa sản phẩm
