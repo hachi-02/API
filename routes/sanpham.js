@@ -40,6 +40,11 @@ router.post("/add", async function (req, res) {
         } else {
           const { tensp, gia, size } = req.body;
           const sizeObj = await Size.findOne({ size: size });
+          if (!sizeObj) {
+            console.log("Không tìm thấy size");
+        } else {
+            console.log("sizeObj._id: ", sizeObj._id);
+        }
           const newItem = { tensp, gia, size: sizeObj._id  };
           const saveSP = await sanpham.create(newItem);
           const finalSP = await sanpham.findById(saveSP._id).populate('size');
