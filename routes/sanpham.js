@@ -44,7 +44,7 @@ router.post("/add", async function (req, res) {
           const saveSP = await sanpham.create(newItem);
           const finalSP = await sanpham.findById(saveSP._id).populate('size');
           console.log('size:', sizeObj);
-          res.status(200).json({ status: true, message: "thêm thành công", sanpham: finalSP });
+          res.status(200).json({ status: true, message: "thêm thành công", sanpham: saveSP });
         }
       });
     } else {
