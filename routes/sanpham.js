@@ -40,7 +40,7 @@ router.post("/add", async function (req, res) {
         } else {
           const { tensp, gia, size } = req.body;
           const sizeObj = await Size.findOne({ size: size });
-          const newItem = { tensp, gia, size: sizeObj.id  };
+          const newItem = { tensp, gia, size: sizeObj._id  };
           const saveSP = await sanpham.create(newItem);
           const finalSP = await sanpham.findById(saveSP.id).populate('size');
           console.log('size:', sizeObj);
