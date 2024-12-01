@@ -4,7 +4,6 @@ var router = express.Router();
 var sanpham = require("../model/sanpham");
 const JWT = require('jsonwebtoken');
 const config = require("../ultil/tokenConfig");
-const Size = require('../model/size');
 
 
 //1.Lấy tất cả sp

@@ -16,7 +16,6 @@ require('./model/product');
 require('./model/trash');
 require('./model/sinhvien');
 require('./model/sanpham');
-require('./model/size');
 
 var app = express();
 
