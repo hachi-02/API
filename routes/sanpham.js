@@ -86,7 +86,7 @@ router.get("/thongtin/tensp", async function (req, res) {
         } else {
           //lấy tên sp từ query
           const { tensp } = req.query;
-          const thongTinSP = await sanpham.findOne({ tensp: tensp }).populate('size');
+          const thongTinSP = await sanpham.findOne({ tensp: tensp });
           if (!thongTinSP) {
             return res.status(404).json({ status: false, message: "Sản phẩm không tìm thấy" });
           }
@@ -164,7 +164,7 @@ router.put("/edit", async function (req, res) {
             findSP.gia = gia ? gia : findSP.gia;
             findSP.size = size ? size : findSP.size;
             await findSP.save();
-            res.status(200).json({ status: true, message: "sửa thành công" });
+            res.status(200).json({ status: true, message: "sửa thành công" ,sanpham:findSP});
           }
           else {
             res.status(400).json({ status: false, message: "chưa tìm thấy sp" });
