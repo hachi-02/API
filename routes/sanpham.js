@@ -155,9 +155,11 @@ router.put("/edit/:id", async function (req, res) {
         if (err) {
           res.status(401).json({ status: false, message: "có lỗi" + err });
         } else {
-          const { id, tensp, gia, size } = req.body;
+          const {tensp, gia, size } = req.body;
+          //lấy id param
+          const productId = req.params.id;
           //tìm sp chỉnh sửa
-          const findSP = await sanpham.findById(id);
+          const findSP = await sanpham.findById(productId);
 
           if (findSP) {
             findSP.tensp = tensp ? tensp : findSP.tensp;
