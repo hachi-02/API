@@ -16,7 +16,7 @@ router.get("/all", async function (req, res) {
         if (err) {
           res.status(401).json({ status: false, message: "có lỗi" + err });
         } else {
-          var list = await sanpham.find().populate('size');
+          var list = await sanpham.find();
           res.status(200).json({ status: true, message: "Thành công", sanpham: list });
         }
       });
@@ -39,8 +39,8 @@ router.post("/add", async function (req, res) {
           res.status(401).json({ status: false, message: "có lỗi" + err });
         } else {
           const { tensp, gia, size } = req.body;
-          const newItem = { tensp, gia, size: size}; // Sử dụng ObjectId của size
-          const saveSP = await sanpham.create(newItem);
+          const newItem = { tensp, gia,size};
+          const saveSP = await sanpham.create(newItem).populate('size');
           res.status(200).json({ status: true, message: "thêm thành công", sanpham: saveSP });
         }
       });

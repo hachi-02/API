@@ -7,8 +7,4 @@ const sanpham=new Schema({
     gia:{type:Number},
     size:{type:ObjectId,ref:'size'}
 });
-sanpham.pre('findOne', function(next) {
-    this.populate('size'); // Sử dụng populate để lấy thông tin size
-    next();
-});
 module.exports=mongoose.models.sanpham||mongoose.model('sanpham',sanpham);
