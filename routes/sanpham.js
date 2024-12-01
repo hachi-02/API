@@ -39,13 +39,7 @@ router.post("/add", async function (req, res) {
           res.status(401).json({ status: false, message: "có lỗi" + err });
         } else {
           const { tensp, gia, size } = req.body;
-          const sizeObj = await Size.findOne({ size: size });
-
-          if (!sizeObj) {
-            return res.status(404).json({ status: false, message: "Kích thước không tìm thấy" }); // Trả về lỗi 404
-          }
-
-          const newItem = { tensp, gia, size: sizeObj._id };
+          const newItem = { tensp, gia, size};
           const saveSP = await sanpham.create(newItem);
           const finalSP = await sanpham.findById(saveSP._id).populate('size'); // Sử dụng finalSP
           console.log('finalSP:', finalSP); // kiểm tra finalSP
