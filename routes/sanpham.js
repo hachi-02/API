@@ -39,18 +39,8 @@ router.post("/add", async function (req, res) {
           res.status(401).json({ status: false, message: "có lỗi" + err });
         } else {
           const { tensp, gia, size } = req.body;
-          
-          // Tìm size trong bảng size
-          const sizeObj = await Size.findOne({ size: size });
-
-          if (!sizeObj) {
-            return res.status(404).json({ status: false, message: "Kích thước không tìm thấy" });
-          }
-
-          // Lưu sản phẩm với size là ObjectId
-          const newItem = { tensp, gia, size: sizeObj._id }; // Sử dụng ObjectId của size
+          const newItem = { tensp, gia, size: size}; // Sử dụng ObjectId của size
           const saveSP = await sanpham.create(newItem);
-
           res.status(200).json({ status: true, message: "thêm thành công", sanpham: saveSP });
         }
       });
