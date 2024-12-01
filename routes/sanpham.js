@@ -40,7 +40,7 @@ router.post("/add", async function (req, res) {
         } else {
           const { tensp, gia, size } = req.body;
           const newItem = { tensp, gia,size};
-          const saveSP = await sanpham.create(newItem).populate('size');
+          const saveSP = await sanpham.create(newItem);
           res.status(200).json({ status: true, message: "thêm thành công", sanpham: saveSP });
         }
       });
