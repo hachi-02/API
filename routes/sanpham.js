@@ -158,8 +158,10 @@ router.put("/edit/:id", async function (req, res) {
           const {tensp, gia, size } = req.body;
           //lấy id param
           const productId = req.params.id;
+          console.log("productId:", productId);
           //tìm sp chỉnh sửa
           const findSP = await sanpham.findById(productId);
+          console.log("findSP:", findSP);
 
           if (findSP) {
             findSP.tensp = tensp ? tensp : findSP.tensp;
