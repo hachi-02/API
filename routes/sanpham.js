@@ -23,7 +23,7 @@ router.get("/all", async function (req, res) {
       res.status(401).json({ status: false, message: "kh xác thực" + err });
     }
   } catch (error) {
-    res.status(400).json({ status: false, message: "Có lỗi", error: error.message  });
+    res.status(400).json({ status: false, message: "Có lỗi", error: error.message });
   }
 });
 
@@ -38,7 +38,7 @@ router.post("/add", async function (req, res) {
           res.status(401).json({ status: false, message: "có lỗi" + err });
         } else {
           const { tensp, gia, size } = req.body;
-          const newItem = { tensp, gia,size};
+          const newItem = { tensp, gia, size };
           const saveSP = await sanpham.create(newItem);
           res.status(200).json({ status: true, message: "thêm thành công", sanpham: saveSP });
         }
@@ -155,7 +155,7 @@ router.put("/edit/:id", async function (req, res) {
         if (err) {
           res.status(401).json({ status: false, message: "có lỗi" + err });
         } else {
-          const {tensp, gia, size } = req.body;
+          const { tensp, gia, size } = req.body;
           //lấy id param
           const productId = req.params.id;
           console.log("productId:", productId);
@@ -168,7 +168,7 @@ router.put("/edit/:id", async function (req, res) {
             findSP.gia = gia ? gia : findSP.gia;
             findSP.size = size ? size : findSP.size;
             await findSP.save();
-            res.status(200).json({ status: true, message: "sửa thành công" ,sanpham:findSP});
+            res.status(200).json({ status: true, message: "sửa thành công", sanpham: findSP });
           }
           else {
             res.status(400).json({ status: false, message: "chưa tìm thấy sp" });
@@ -184,6 +184,27 @@ router.put("/edit/:id", async function (req, res) {
 
 });
 
+//8
+router.get("/size", async function (req, res) {
+  const { size } = req.query;
+  try {
+    const token = req.header("Authorization").split(' ')[1];
+    if (token) {
+      JWT.verify(token, config.SECRETKEY, async function (err, id) {
+        if (err) {
+          res.status(401).json({ status: false, message: "có lỗi" + err });
+        } else {
+          const list = await sanpham.find({ size: size });
+          res.json(list);
+        }
+      });
+    } else {
+      res.status(401).json({ status: false, message: "kh xác thực" + err });
+    }
+  } catch (err) {
+    res.status(500).json({ error: "Lỗi server" });
+  }
+});
 
 
 
