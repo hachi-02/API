@@ -75,7 +75,7 @@ router.delete("/delete/:id", async function (req, res) {
   }
 });
 
-//4.Tìm kiếm sản phẩm
+//4.Tìm kiếm sản phẩm (sanpham/tensp?tensp=?)
 router.get("/thongtin/tensp", async function (req, res) {
   try {
     const token = req.header("Authorization").split(' ')[1];
@@ -146,7 +146,7 @@ router.get("/giagiam", async function (req, res) {
   }
 });
 
-//7.Chỉnh sửa
+//7.Chỉnh sửa  (sanpham/id)
 router.put("/edit/:id", async function (req, res) {
   try {
     const token = req.header("Authorization").split(' ')[1];
@@ -184,7 +184,7 @@ router.put("/edit/:id", async function (req, res) {
 
 });
 
-//8
+//8. Tìm sp theo size (sanpham/size?size=M)
 router.get("/size", async function (req, res) {
   const { size } = req.query;
   try {
@@ -195,6 +195,27 @@ router.get("/size", async function (req, res) {
           res.status(401).json({ status: false, message: "có lỗi" + err });
         } else {
           const list = await sanpham.find({ size: size });
+          res.json(list);
+        }
+      });
+    } else {
+      res.status(401).json({ status: false, message: "kh xác thực" + err });
+    }
+  } catch (err) {
+    res.status(500).json({ error: "Lỗi server" });
+  }
+});
+
+//9. Tìm sản phẩm theo id
+router.get("/thongtin/:id", async function (req, res) {
+  try {
+    const token = req.header("Authorization").split(' ')[1];
+    if (token) {
+      JWT.verify(token, config.SECRETKEY, async function (err, id) {
+        if (err) {
+          res.status(401).json({ status: false, message: "có lỗi" + err });
+        } else {
+          var list = await sanpham.findById(req.params.id);
           res.json(list);
         }
       });
