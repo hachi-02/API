@@ -217,7 +217,7 @@ router.post("/login", async function (req, res) {
       res.status(200).json({ status: true, message: "Tài khoản mk chưa chính xác" });
     }
     else {
-      const token = JWT.sign({ username: username }, config.SECRETKEY, { expiresIn: '90s' });
+      const token = JWT.sign({ username: username }, config.SECRETKEY, { expiresIn: '180s' });
       const refeshToken = JWT.sign({ username: username }, config.SECRETKEY, { expiresIn: '1d' });
       res.status(200).json({ status: true, message: "Đăng nhập thành công", token: token, refeshToken: refeshToken });
     }
